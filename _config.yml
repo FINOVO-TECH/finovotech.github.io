@@ -1,0 +1,25 @@
+title: Finovo Tech — fintech infrastructure for Indian brokers, NBFCs & MFDs
+description: >
+  Developer-first infrastructure for KYC, re-KYC, E-IPO, MFD platforms and
+  WhatsApp onboarding — used by 55+ SEBI-registered brokers, NBFCs and MFDs
+  across India. This is the technical mirror of our primary site at
+  finovo.tech. All content here canonical-points to finovo.tech.
+url: "https://finovotech.github.io"
+baseurl: ""
+theme: jekyll-theme-cayman
+
+# Canonical always points to the primary site; prevents duplicate-content
+# dilution and consolidates ranking authority on finovo.tech.
+canonical_root: "https://www.finovo.tech"
+
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+permalink: /:year/:month/:day/:title/
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
