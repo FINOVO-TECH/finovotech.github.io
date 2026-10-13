@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why your brokerage penny-drop API fails at 2 AM — Finovo Tech</title>
+<meta name="description" content="Penny-drop looks simple until the NPCI gateway blips at 2 AM. Here is the architecture that handles it.">
+<link rel="canonical" href="https://www.finovo.tech/blog/penny-drop">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why your brokerage penny-drop API fails at 2 AM">
+<meta property="og:url" content="https://www.finovo.tech/blog/penny-drop">
+<style>
+  :root { color-scheme: light dark; }
+  html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;color:#0a1628;background:#fff;}
+  @media (prefers-color-scheme: dark) { body { background:#0a1628; color:#e5e7eb; } a { color:#60a5fa; } .canonical-note { background: rgba(96,165,250,0.08) !important; border-left-color: #60a5fa !important; } }
+  main{max-width:720px;margin:0 auto;padding:48px 24px;}
+  h1{font-size:1.9rem;line-height:1.2;margin:0 0 24px;}
+  h2{margin-top:36px;font-size:1.25rem;}
+  a{color:#0f3a8f;text-decoration:none;border-bottom:1px solid rgba(15,58,143,0.25);}
+  a:hover{border-bottom-color:currentColor;}
+  .canonical-note{margin:24px 0;padding:14px 18px;background:rgba(15,58,143,0.06);border-left:3px solid #0f3a8f;border-radius:6px;font-size:0.95rem;}
+  ul,ol{padding-left:22px;}
+  li{margin-bottom:8px;}
+  footer{margin-top:60px;padding-top:24px;border-top:1px solid #e5e7eb;color:#6b7280;font-size:0.85rem;}
+</style>
+</head>
+<body>
+<main>
+  <nav aria-label="Breadcrumb" style="font-size:0.85rem;color:#6b7280;margin-bottom:12px;">
+    <a href="/">Finovo Mirror</a> &rsaquo; Penny Drop Architecture
+  </nav>
+
+  <h1>Why your brokerage penny-drop API fails at 2 AM</h1>
+
+  <div class="canonical-note">
+    <strong>Full article: <a href="https://www.finovo.tech/blog/penny-drop">finovo.tech/blog/penny-drop</a></strong><br>
+    This is a technical mirror. The canonical version lives at <a href="https://www.finovo.tech/">finovo.tech</a>.
+  </div>
+
+  <p>Penny-drop is the standard way to verify an Indian bank account during KYC. Your KYC engine credits ₹1 to the customer's account via IMPS, reads back the account-holder name from the IMPS response, and matches it against the PAN/Aadhaar name. If it matches, bank account is verified.</p>
+
+  <p>Simple on paper. Falls apart at 2 AM.</p>
+
+  <h2>The failure modes</h2>
+  <ul>
+    <li><strong>NPCI switch maintenance window</strong>: typically Fri/Sat 2-4 AM IST</li>
+    <li><strong>Bank-side IMPS batch delays</strong>: some PSBs batch-process IMPS between 1-5 AM</li>
+    <li><strong>ENACH SOS flag</strong>: triggers transaction failure even on live rails</li>
+    <li><strong>Name-match false negatives</strong>: "RAMESH K." vs "Ramesh Kumar" vs "Mr. Ramesh Kumar"</li>
+    <li><strong>Reversal timing</strong>: ₹1 is credited and must be reversed; if the reversal fails the customer's balance is permanently wrong by ₹1</li>
+  </ul>
+
+  <h2>What a resilient penny-drop API does</h2>
+  <ol>
+    <li><strong>Multi-provider fallback</strong>: route to IMPS primary, UPI auto-collect fallback</li>
+    <li><strong>Smart retry with jitter</strong>: back off exponentially on provider errors; no retry on hard failures</li>
+    <li><strong>Fuzzy name matching with Indian name conventions</strong>: handle initials, honorifics, middle-name reorderings</li>
+    <li><strong>Reversal reconciliation</strong>: nightly cron matches each ₹1 debit to a reversal credit; alerts on mismatches</li>
+    <li><strong>Status pass-through to customer</strong>: don't silently retry — show "verifying your bank" and tell them if it's going to take 10 min at 2 AM</li>
+  </ol>
+
+  <p><a href="https://www.finovo.tech/services#ekyc-vanilla">Finovo's penny-drop API</a> handles all of the above as default behaviour. We've shipped it for 55+ Indian brokers; we know what the 2 AM failure modes look like.</p>
+
+  <h2>Read the full architecture</h2>
+  <ul>
+    <li><a href="https://www.finovo.tech/blog/penny-drop">Full technical article</a></li>
+    <li><a href="https://www.finovo.tech/services#ekyc-vanilla">eKYC Vanilla</a></li>
+    <li><a href="https://www.finovo.tech/services#ekyc-enterprise">eKYC Enterprise with full compliance pipeline</a></li>
+    <li><a href="https://www.finovo.tech/contact">Contact us for integration spec</a></li>
+  </ul>
+
+  <footer>
+    Mirror of <a href="https://www.finovo.tech/">finovo.tech</a>. Canonical: <a href="https://www.finovo.tech/blog/penny-drop">finovo.tech/blog/penny-drop</a>
+  </footer>
+</main>
+</body>
+</html>

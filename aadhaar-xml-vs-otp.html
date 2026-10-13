@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aadhaar XML vs Aadhaar OTP — picking the right KYC flow — Finovo Tech</title>
+<meta name="description" content="Two Aadhaar verification pathways for Indian brokers. Which to pick for which flow, and the trade-offs on cost, UX and audit trail.">
+<link rel="canonical" href="https://www.finovo.tech/blog/aadhaar-xml-vs-otp">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Aadhaar XML vs Aadhaar OTP — picking the right KYC flow">
+<meta property="og:url" content="https://www.finovo.tech/blog/aadhaar-xml-vs-otp">
+<style>
+  :root { color-scheme: light dark; }
+  html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;color:#0a1628;background:#fff;}
+  @media (prefers-color-scheme: dark) { body { background:#0a1628; color:#e5e7eb; } a { color:#60a5fa; } .canonical-note { background: rgba(96,165,250,0.08) !important; border-left-color: #60a5fa !important; } th,td { border-color:#1f2937 !important; } }
+  main{max-width:720px;margin:0 auto;padding:48px 24px;}
+  h1{font-size:1.9rem;line-height:1.2;margin:0 0 24px;}
+  h2{margin-top:36px;font-size:1.25rem;}
+  a{color:#0f3a8f;text-decoration:none;border-bottom:1px solid rgba(15,58,143,0.25);}
+  a:hover{border-bottom-color:currentColor;}
+  .canonical-note{margin:24px 0;padding:14px 18px;background:rgba(15,58,143,0.06);border-left:3px solid #0f3a8f;border-radius:6px;font-size:0.95rem;}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.95rem;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #e5e7eb;}
+  th{background:rgba(15,58,143,0.05);font-weight:600;}
+  ul{padding-left:22px;}
+  footer{margin-top:60px;padding-top:24px;border-top:1px solid #e5e7eb;color:#6b7280;font-size:0.85rem;}
+</style>
+</head>
+<body>
+<main>
+  <nav aria-label="Breadcrumb" style="font-size:0.85rem;color:#6b7280;margin-bottom:12px;">
+    <a href="/">Finovo Mirror</a> &rsaquo; Aadhaar XML vs OTP
+  </nav>
+
+  <h1>Aadhaar XML vs Aadhaar OTP — picking the right KYC flow</h1>
+
+  <div class="canonical-note">
+    <strong>Full article: <a href="https://www.finovo.tech/blog/aadhaar-xml-vs-otp">finovo.tech/blog/aadhaar-xml-vs-otp</a></strong><br>
+    This is a technical mirror. The canonical version lives at <a href="https://www.finovo.tech/">finovo.tech</a>.
+  </div>
+
+  <p>Aadhaar is the backbone of Indian KYC. Two verification pathways: <strong>OTP</strong> (user receives a one-time password on their Aadhaar-linked mobile and types it in) and <strong>XML</strong> (user downloads a signed Aadhaar XML from UIDAI and uploads it).</p>
+
+  <p>For a broker's KYC product, which to pick depends on:</p>
+
+  <table>
+    <thead>
+      <tr><th>Criterion</th><th>OTP</th><th>XML</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Reliance on UIDAI-linked mobile</td><td>Required</td><td>Not required</td></tr>
+      <tr><td>Completion speed</td><td>30-60s</td><td>2-4 min</td></tr>
+      <tr><td>User experience</td><td>Native, inline</td><td>2-step UIDAI handoff</td></tr>
+      <tr><td>Audit trail</td><td>OTP timestamp</td><td>Signed XML + cert chain</td></tr>
+      <tr><td>Cost per verification</td><td>Lower</td><td>Higher</td></tr>
+      <tr><td>Right fit</td><td>Volume onboarding</td><td>High-value demat accounts</td></tr>
+    </tbody>
+  </table>
+
+  <p>For most Indian brokers running SIP onboarding at volume, <a href="https://www.finovo.tech/services#ekyc-vanilla">Aadhaar OTP</a> wins. For enterprise verification, demat account opening with higher value, or when the UIDAI-mobile linkage can't be relied on, <a href="https://www.finovo.tech/services#ekyc-enterprise">Aadhaar XML</a> is the right choice.</p>
+
+  <p>Finovo supports both pathways in a single eKYC engine — you don't pick upfront, you let the flow adapt to the customer's state.</p>
+
+  <h2>Read the full comparison</h2>
+  <ul>
+    <li><a href="https://www.finovo.tech/blog/aadhaar-xml-vs-otp">Full article on finovo.tech</a></li>
+    <li><a href="https://www.finovo.tech/services#ekyc-vanilla">eKYC Vanilla</a></li>
+    <li><a href="https://www.finovo.tech/services#ekyc-enterprise">eKYC Enterprise</a></li>
+    <li><a href="https://www.finovo.tech/contact">Book a demo</a></li>
+  </ul>
+
+  <footer>
+    Mirror of <a href="https://www.finovo.tech/">finovo.tech</a>. Canonical: <a href="https://www.finovo.tech/blog/aadhaar-xml-vs-otp">finovo.tech/blog/aadhaar-xml-vs-otp</a>
+  </footer>
+</main>
+</body>
+</html>
